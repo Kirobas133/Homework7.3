@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 class functor {
     std::string f_name;
@@ -10,13 +11,11 @@ class functor {
     int counts3;
 public:
     functor(std::string name) : f_name(name), sum{0}, counts3{0} {};
-    void operator () (std::vector <int> vec) {
-        for (auto i : vec) {
-            if ((i % 3) == 0) {
-                counts3++;
-                sum = sum + i;
-            }
+    void operator () (int a) {
+        if ((a % 3) == 0) {
+            counts3++;
         }
+        sum = sum + a;
     }
     int get_sum() {
         return sum;
@@ -28,10 +27,10 @@ public:
 
 int main()
 {
-    functor foo("foo");
+    functor f("foo");
     std::vector <int> vec = { 4, 1, 3, 6, 25, 54 };
-    foo(vec);
-    std::cout << "get_sum() = " << foo.get_sum() << "\nget_count() = " << foo.get_count();
+    f = for_each(vec.begin(), vec.end(), f);
+    std::cout << "get_sum() = " << f.get_sum() << "\nget_count() = " << f.get_count();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
